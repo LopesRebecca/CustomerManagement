@@ -1,3 +1,7 @@
 <Solution>
-  <Project Path="CustomerManagement/CustomerManagement.csproj" />
+  <Project Path="CustomerManagement.Api/CustomerManagement.Api.csproj" />
+  <Project Path="CustomerManagement.Application/CustomerManagement.Application.csproj" />
+  <Project Path="CustomerManagement.Domain/CustomerManagement.Domain.csproj" />
+  <Project Path="CustomerManagement.Infrastructure/CustomerManagement.Infrastructure.csproj" />
+  <Project Path="CustomerManagement.Tests/CustomerManagement.Tests.csproj" />
 </Solution>
