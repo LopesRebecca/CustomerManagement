@@ -7,13 +7,13 @@ namespace CustomerManagement.Infrastructure.Persistence.Maps
     {
         public ClientMap()
         {
-            Table("clients");
+            Table("client");
 
             Id(x => x.Id)
                 .GeneratedBy.Increment();
 
-            Map(x => x.FantasyName)
-                .Column("fantasy_name")
+            Map(x => x.Name)
+                .Column("name")
                 .Not.Nullable();
 
 
