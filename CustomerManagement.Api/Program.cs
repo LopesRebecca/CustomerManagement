@@ -1,23 +1,73 @@
+using CustomerManagement.Application.Handlers.CreateClient;
+using CustomerManagement.Domain.Interface.Repositories;
+using CustomerManagement.Infrastructure.Persistence;
+using CustomerManagement.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Text.Json;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+
+// Swagger/OpenAPI
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
+    {
+        Title = "Customer Management API",
+        Version = "v1",
+        Description = "API para gerenciamento de clientes"
+    });
+});
+
+// NHibernate
+builder.Services.AddSingleton(factory =>
+    NHibernateSessionFactory.CreateSessionFactory(
+        builder.Configuration.GetConnectionString("Default")
+        ?? throw new InvalidOperationException("Connection string 'Default' not found.")
+    )
+);
+
+// Repositories
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+
+// Application Handlers
+builder.Services.AddScoped<ICreateClientHandler, CreateClientHandler>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Global Exception Handler
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+        if (contextFeature != null)
+        {
+            var response = new { error = "An internal error occurred. Please try again later." };
+            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+        }
+    });
+});
+
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer Management API v1");
+        options.RoutePrefix = "swagger";
+    });
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();
