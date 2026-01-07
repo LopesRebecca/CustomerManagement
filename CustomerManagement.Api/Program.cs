@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// Swagger/OpenAPI
+// Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.OpenApiInfo
@@ -37,7 +37,7 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 // Application Handlers
 builder.Services.AddScoped<ICreateCustomerHandler, CreateCustomerHandler>();
-builder.Services.AddScoped<IGetCustomerByIdHandler, GetClientByIdHadler>();
+builder.Services.AddScoped<IGetCustomerByIdHandler, GetCustomerByIdHandler>();
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-﻿namespace CustomerManagement.Application.Queries.GetClientById.DTO
+﻿namespace CustomerManagement.Application.Queries.GetCustomerResulById.DTO
 {
     public class CustomerResultDTO
     {
