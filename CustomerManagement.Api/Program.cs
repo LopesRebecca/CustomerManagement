@@ -1,5 +1,6 @@
-using CustomerManagement.Application.Handlers.CreateClient;
-using CustomerManagement.Application.Handlers.GetClientById;
+using CustomerManagement.Application.Handlers.CreateCustomer;
+using CustomerManagement.Application.Handlers.Customer;
+using CustomerManagement.Application.Handlers.GetCustomerById;
 using CustomerManagement.Domain.Interface.Repositories;
 using CustomerManagement.Infrastructure.Persistence;
 using CustomerManagement.Infrastructure.Repositories;
@@ -32,11 +33,11 @@ builder.Services.AddSingleton(factory =>
 );
 
 // Repositories
-builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 // Application Handlers
-builder.Services.AddScoped<ICreateClientHandler, CreateClientHandler>();
-builder.Services.AddScoped<IGetClientByIdHandler, GetClientByIdHadler>();
+builder.Services.AddScoped<ICreateCustomerHandler, CreateCustomerHandler>();
+builder.Services.AddScoped<IGetCustomerByIdHandler, GetClientByIdHadler>();
 
 var app = builder.Build();
 

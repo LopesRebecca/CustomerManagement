@@ -2,25 +2,25 @@
 using CustomerManagement.Application.Queries.GetClientById.DTO;
 using CustomerManagement.Domain.Interface.Repositories;
 
-namespace CustomerManagement.Application.Handlers.GetClientById
+namespace CustomerManagement.Application.Handlers.GetCustomerById
 {
-    public class GetClientByIdHadler : IGetClientByIdHandler
+    public class GetClientByIdHadler : IGetCustomerByIdHandler
     {
-        private readonly IClientRepository _repository;
+        private readonly ICustomerRepository _repository;
 
-        public GetClientByIdHadler(IClientRepository repository)
+        public GetClientByIdHadler(ICustomerRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<ClientResultDTO?> HandleAsync(GetClientByIdQuery query)
+        public async Task<CustomerResultDTO?> HandleAsync(GetCustomerByIdQuery query)
         {
             var cliente = await _repository.GetByIdAsync(query.Id);
 
             if (cliente is null)
                 return null;
 
-            return new ClientResultDTO
+            return new CustomerResultDTO
             {
                 Id = cliente.Id,
                 Name = cliente.Name,

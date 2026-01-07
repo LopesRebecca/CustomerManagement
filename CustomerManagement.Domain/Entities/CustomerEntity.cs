@@ -3,16 +3,16 @@ using CustomerManagement.Domain.ValueObjects;
 
 namespace CustomerManagement.Domain.Entities
 {
-    public class ClientEntity
+    public class CustomerEntity
     {
         public virtual int Id { get; protected set; }
         public virtual string Name { get; protected set; } = default!;
         public virtual DocumentNumber DocumentNumber { get; protected set; } = default!;
         public virtual bool Active { get; protected set; }
 
-        protected ClientEntity() { }
+        protected CustomerEntity() { }
 
-        public ClientEntity(string name, DocumentNumber documentNumber)
+        public CustomerEntity(string name, DocumentNumber documentNumber)
         {
             ValidateName(name);
             

@@ -6,18 +6,18 @@ using NHibernate.Linq;
 
 namespace CustomerManagement.Infrastructure.Repositories
 {
-    public class ClientRepository : IClientRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly ISessionFactory _sessionFactory;
         private readonly ISession _session;
 
-        public ClientRepository(ISessionFactory sessionFactory)
+        public CustomerRepository(ISessionFactory sessionFactory)
         {
             _sessionFactory = sessionFactory;
             _session = _sessionFactory.OpenSession();
         }
 
-        public async Task CreateAsync(ClientEntity cliente, CancellationToken cancellationToken = default)
+        public async Task CreateAsync(CustomerEntity cliente, CancellationToken cancellationToken = default)
         {
             using var transaction = _session.BeginTransaction();
 
@@ -25,14 +25,14 @@ namespace CustomerManagement.Infrastructure.Repositories
             await transaction.CommitAsync(cancellationToken);
         }
 
-        public async Task<ClientEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<CustomerEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _session.GetAsync<ClientEntity>(id, cancellationToken);
+            return await _session.GetAsync<CustomerEntity>(id, cancellationToken);
         }
 
         public async Task<bool> ExistDocumentNumberAsync(DocumentNumber document, CancellationToken cancellationToken = default)
         {
-            return await _session.Query<ClientEntity>()
+            return await _session.Query<CustomerEntity>()
                 .AnyAsync(c => c.DocumentNumber.Value == document.Value, cancellationToken);
         }
     }

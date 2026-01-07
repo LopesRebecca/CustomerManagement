@@ -1,6 +1,6 @@
 ﻿namespace CustomerManagement.Application.Queries.GetClientById
 {
-    public class GetClientByIdQuery
+    public class GetCustomerByIdQuery
     {
         public int Id { get; init; }
     }

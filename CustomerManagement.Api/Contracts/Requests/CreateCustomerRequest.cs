@@ -2,7 +2,7 @@
 
 namespace CustomerManagement.Api.Contracts.Requests
 {
-    public class CreateClientRequest
+    public class CreateCustomerRequest
     {
         [Required(ErrorMessage = "Nome é obrigatório.")]
         [StringLength(200, MinimumLength = 2, ErrorMessage = "Nome deve ter entre 2 e 200 caracteres.")]
