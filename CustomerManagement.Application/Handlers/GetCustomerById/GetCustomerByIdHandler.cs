@@ -1,14 +1,14 @@
 ﻿using CustomerManagement.Application.Queries.GetClientById;
-using CustomerManagement.Application.Queries.GetClientById.DTO;
+using CustomerManagement.Application.Queries.GetCustomerResultById.DTO;
 using CustomerManagement.Domain.Interface.Repositories;
 
 namespace CustomerManagement.Application.Handlers.GetCustomerById
 {
-    public class GetClientByIdHadler : IGetCustomerByIdHandler
+    public class GetCustomerByIdHandler : IGetCustomerByIdHandler
     {
         private readonly ICustomerRepository _repository;
 
-        public GetClientByIdHadler(ICustomerRepository repository)
+        public GetCustomerByIdHandler(ICustomerRepository repository)
         {
             _repository = repository;
         }

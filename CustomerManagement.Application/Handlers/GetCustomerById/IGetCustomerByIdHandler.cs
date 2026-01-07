@@ -1,5 +1,5 @@
 ﻿using CustomerManagement.Application.Queries.GetClientById;
-using CustomerManagement.Application.Queries.GetClientById.DTO;
+using CustomerManagement.Application.Queries.GetCustomerResultById.DTO;
 
 namespace CustomerManagement.Application.Handlers.GetCustomerById
 {
