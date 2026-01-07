@@ -48,10 +48,6 @@ namespace CustomerManagement.Domain.ValueObjects
             return new DocumentNumber(digit, type);
         }
 
-        public override string ToString() => Tipo == DocumentType.Cpf
-            ? FormatarCpf(Valor)
-            : FormatarCnpj(Valor);
-
         public override string ToString() => Value;
 
         private static string FormatarCnpj(string cnpj)
@@ -126,7 +122,12 @@ namespace CustomerManagement.Domain.ValueObjects
 
         public override bool Equals(object? obj) => Equals(obj as DocumentNumber);
 
-        public override int GetHashCode() => HashCode.Combine(Valor, Tipo);
+        public override int GetHashCode() => HashCode.Combine(Value, Type);
+
+        public bool Equals(DocumentNumber? other)
+        {
+            throw new NotImplementedException();
+        }
 
         public static bool operator ==(DocumentNumber? left, DocumentNumber? right)
             => left?.Equals(right) ?? right is null;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CustomerManagement.Application.Handlers.GetClientById
 {
-    public class GetClientByIdHadler
+    public class GetClientByIdHadler : IGetClientByIdHadler
     {
         private readonly IClientRepository _repository;
 
