@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace CustomerManagement.Application.Customer.Interface
+﻿namespace CustomerManagement.Application.Customer.Interface
 {
     public interface ICommandHandler<TCommand, TResult>
     {

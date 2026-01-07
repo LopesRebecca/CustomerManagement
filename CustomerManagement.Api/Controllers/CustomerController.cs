@@ -30,18 +30,18 @@ namespace CustomerManagement.Api.Controllers
 
             var result = await _mediator.Send(command, cancellationToken);
 
-            if (!result.Sucess)
+            if (!result.Success)
                 return BadRequest(new { error = result.Message });
 
             return Ok(result);
         }
 
-        [HttpGet("{idClient}")]
-        public async Task<IActionResult> Get(int idClient, CancellationToken cancellationToken = default)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id, CancellationToken cancellationToken = default)
         {
             var query = new GetCustomerByIdQuery
             {
-                Id = idClient
+                Id = id
             };
 
             var result = await _mediator.Send(query, cancellationToken);

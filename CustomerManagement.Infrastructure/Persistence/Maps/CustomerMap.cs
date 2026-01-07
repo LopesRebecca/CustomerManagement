@@ -1,8 +1,6 @@
 ﻿using CustomerManagement.Domain.Entities;
 using CustomerManagement.Domain.Enums;
-using FluentNHibernate.Conventions.Inspections;
 using FluentNHibernate.Mapping;
-using System.Reflection.Metadata;
 
 namespace CustomerManagement.Infrastructure.Persistence.Maps
 {
