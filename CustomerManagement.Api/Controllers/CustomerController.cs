@@ -1,8 +1,7 @@
 ﻿using CustomerManagement.Api.Contracts.Requests;
-using CustomerManagement.Application.Commands.Request;
-using CustomerManagement.Application.Handlers.CreateCustomer;
-using CustomerManagement.Application.Handlers.GetCustomerById;
-using CustomerManagement.Application.Queries.GetClientById;
+using CustomerManagement.Application.Customer.Commands;
+using CustomerManagement.Application.Customer.Queries;
+using CustomerManagement.Application.Mediator;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerManagement.Api.Controllers
@@ -11,15 +10,11 @@ namespace CustomerManagement.Api.Controllers
     [Route("api/clientes")]
     public sealed class CustomerController : ControllerBase
     {
-        private readonly ICreateCustomerHandler _createClientHandler;
-        private readonly IGetCustomerByIdHandler _getClientByIdHadler;
+        private readonly IMediator _mediator;
 
-        public CustomerController(
-            ICreateCustomerHandler createClientHandler,
-            IGetCustomerByIdHandler getClientByIdHandler)
+        public CustomerController(IMediator mediator)
         {
-            _createClientHandler = createClientHandler;
-            _getClientByIdHadler = getClientByIdHandler;
+            _mediator = mediator;
         }
 
         [HttpPost]
@@ -27,29 +22,29 @@ namespace CustomerManagement.Api.Controllers
             [FromBody] CreateCustomerRequest request,
             CancellationToken cancellationToken = default)
         {
-            var command = new CreateCustomerRequestCommand
+            var command = new CreateCustomerCommand
             {
                 Name = request.Name,
                 DocumentNumber = request.Document
             };
 
-            var result = await _createClientHandler.HandleAsync(command, cancellationToken);
+            var result = await _mediator.Send(command, cancellationToken);
 
-            if (!result.Success)
-                return BadRequest(new { error = result.Error });
+            if (!result.Sucess)
+                return BadRequest(new { error = result.Message });
 
             return Ok(result);
         }
 
         [HttpGet("{idClient}")]
-        public async Task<IActionResult> Get([FromRoute(Name = "id")]int idClient)
+        public async Task<IActionResult> Get(int idClient, CancellationToken cancellationToken = default)
         {
             var query = new GetCustomerByIdQuery
             {
                 Id = idClient
             };
 
-            var result = await _getClientByIdHadler.HandleAsync(query);
+            var result = await _mediator.Send(query, cancellationToken);
 
             if(result is null)
                 return NotFound("Cliente com o Id informado não encontrado");
