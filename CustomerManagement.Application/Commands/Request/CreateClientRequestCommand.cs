@@ -1,10 +1,8 @@
-﻿using CustomerManagement.Domain.Enums;
-
-namespace CustomerManagement.Application.Commands.Request
+﻿namespace CustomerManagement.Application.Commands.Request
 {
     public class CreateClientRequestCommand
     {
-        public string Name { get; init; } = default!;
-        public string DocumentNumber { get; init; } = default!;
+        public required string Name { get; init; }
+        public required string DocumentNumber { get; init; }
     }
 }

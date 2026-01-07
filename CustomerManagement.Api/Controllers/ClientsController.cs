@@ -9,16 +9,17 @@ namespace CustomerManagement.Api.Controllers
     [Route("api/clientes")]
     public sealed class ClientsController : ControllerBase
     {
-        private readonly CreateClientHandler _createClientHandler;
+        private readonly ICreateClientHandler _createClientHandler;
 
-        public ClientsController(
-            CreateClientHandler createClientHandler)
+        public ClientsController(ICreateClientHandler createClientHandler)
         {
             _createClientHandler = createClientHandler;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Criar([FromBody] CreateClientRequest request)
+        public async Task<IActionResult> Criar(
+            [FromBody] CreateClientRequest request,
+            CancellationToken cancellationToken = default)
         {
             var command = new CreateClientRequestCommand
             {
@@ -26,12 +27,12 @@ namespace CustomerManagement.Api.Controllers
                 DocumentNumber = request.Document
             };
 
-            var result = await _createClientHandler.HandleAsync(command);
+            var result = await _createClientHandler.HandleAsync(command, cancellationToken);
 
-            if (!result.Sucess)
-                return BadRequest(new { erro = result.Erro });
+            if (!result.Success)
+                return BadRequest(new { error = result.Error });
 
-            return Ok(result);
+            return Created($"api/clientes/{result.ClientId}", result);
         }
     }
 }

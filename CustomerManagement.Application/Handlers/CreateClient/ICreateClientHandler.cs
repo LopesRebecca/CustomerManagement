@@ -5,6 +5,6 @@ namespace CustomerManagement.Application.Handlers.CreateClient
 {
     public interface ICreateClientHandler
     {
-        Task<CreateClientResponse> HandleAsync(CreateClientRequest command);
+        Task<CreateClientResponse> HandleAsync(CreateClientRequestCommand command, CancellationToken cancellationToken = default);
     }
 }

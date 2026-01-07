@@ -16,13 +16,15 @@ namespace CustomerManagement.Application.Handlers.CreateClient
             _repository = repository;
         }
 
-        public async Task<CreateClientResponse> HandleAsync(CreateClientRequest command)
+        public async Task<CreateClientResponse> HandleAsync(
+            CreateClientRequestCommand command,
+            CancellationToken cancellationToken = default)
         {
             try
             {
                 var documento = DocumentNumber.Create(command.DocumentNumber);
 
-                if (await _repository.ExistDocumentNumberAsync(documento))
+                if (await _repository.ExistDocumentNumberAsync(documento, cancellationToken))
                     return CreateClientResponse.Failed("Documento já cadastrado.");
 
                 var cliente = new ClientEntity(
@@ -30,7 +32,7 @@ namespace CustomerManagement.Application.Handlers.CreateClient
                     documento
                 );
 
-                await _repository.CreateAsync(cliente);
+                await _repository.CreateAsync(cliente, cancellationToken);
 
                 return CreateClientResponse.Ok(cliente.Id);
             }

@@ -2,21 +2,21 @@
 {
     public class CreateClientResponse
     {
-        public bool Sucess { get; }
-        public string? Erro { get; }
+        public bool Success { get; }
+        public string? Error { get; }
         public int? ClientId { get; }
 
-        private CreateClientResponse(bool sucesso, string? erro, int? clientId)
+        private CreateClientResponse(bool success, string? error, int? clientId)
         {
-            Sucess = sucesso;
-            Erro = erro;
+            Success = success;
+            Error = error;
             ClientId = clientId;
         }
 
         public static CreateClientResponse Ok(int id)
             => new(true, null, id);
 
-        public static CreateClientResponse Failed(string erro)
-            => new(false, erro, null);
+        public static CreateClientResponse Failed(string error)
+            => new(false, error, null);
     }
 }
