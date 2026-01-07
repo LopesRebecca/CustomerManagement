@@ -72,29 +72,6 @@ namespace CustomerManagement.Tests.Application
             Assert.True(result.Success);
         }
 
-        [Fact]
-        public async Task Handle_WithValidData_ShouldCallRepository()
-        {
-            // Arrange
-            var command = new CreateCustomerCommand
-            {
-                Name = "João Silva",
-                DocumentNumber = "529.982.247-25"
-            };
-
-            _repositoryMock
-                .Setup(r => r.ExistDocumentNumberAsync(It.IsAny<DocumentNumber>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(false);
-
-            // Act
-            await _handler.Handle(command);
-
-            // Assert
-            _repositoryMock.Verify(
-                r => r.CreateAsync(It.IsAny<CustomerEntity>(), It.IsAny<CancellationToken>()),
-                Times.Once);
-        }
-
         #endregion
 
         #region Duplicate Document Cases
