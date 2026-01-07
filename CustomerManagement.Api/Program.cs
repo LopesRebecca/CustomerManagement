@@ -24,7 +24,7 @@ builder.Services.AddSwaggerGen(options =>
 
 // NHibernate
 builder.Services.AddSingleton(factory =>
-    NHibernateSessionFactory.CriarSessionFactory(
+    NHibernateSessionFactory.CreateSessionFactory(
         builder.Configuration.GetConnectionString("Default")
         ?? throw new InvalidOperationException("Connection string 'Default' not found.")
     )
@@ -49,7 +49,7 @@ app.UseExceptionHandler(appError =>
         var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
         if (contextFeature != null)
         {
-            var response = new { error = "Ocorreu um erro interno. Tente novamente mais tarde." };
+            var response = new { error = "An internal error occurred. Please try again later." };
             await context.Response.WriteAsync(JsonSerializer.Serialize(response));
         }
     });

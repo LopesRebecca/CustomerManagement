@@ -6,8 +6,6 @@ namespace CustomerManagement.Api.Extensions
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<ICreateClientHandler, CreateClientHandler>();
-
             return services;
         }
     }

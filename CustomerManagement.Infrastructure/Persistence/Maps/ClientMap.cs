@@ -11,7 +11,7 @@ namespace CustomerManagement.Infrastructure.Persistence.Maps
 
             Id(x => x.Id)
                 .Column("id")
-                .GeneratedBy.Increment();
+                .GeneratedBy.Identity();
 
             Map(x => x.Name)
                 .Column("name")
@@ -20,12 +20,12 @@ namespace CustomerManagement.Infrastructure.Persistence.Maps
 
             Component(x => x.DocumentNumber, m =>
             {
-                m.Map(d => d.Valor)
+                m.Map(d => d.Value)
                     .Column("document_number")
                     .Length(14)
                     .Not.Nullable();
 
-                m.Map(d => d.Tipo)
+                m.Map(d => d.Type)
                     .Column("document_type")
                     .Not.Nullable();
             });

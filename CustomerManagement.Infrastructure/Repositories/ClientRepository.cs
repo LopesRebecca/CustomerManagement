@@ -9,33 +9,31 @@ namespace CustomerManagement.Infrastructure.Repositories
     public class ClientRepository : IClientRepository
     {
         private readonly ISessionFactory _sessionFactory;
+        private readonly ISession _session;
 
         public ClientRepository(ISessionFactory sessionFactory)
         {
             _sessionFactory = sessionFactory;
+            _session = _sessionFactory.OpenSession();
         }
 
         public async Task CreateAsync(ClientEntity cliente, CancellationToken cancellationToken = default)
         {
-            using var session = _sessionFactory.OpenSession();
-            using var transaction = session.BeginTransaction();
+            using var transaction = _session.BeginTransaction();
 
-            await session.SaveAsync(cliente, cancellationToken);
+            await _session.SaveAsync(cliente, cancellationToken);
             await transaction.CommitAsync(cancellationToken);
         }
 
         public async Task<ClientEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            using var session = _sessionFactory.OpenSession();
-            return await session.GetAsync<ClientEntity>(id, cancellationToken);
+            return await _session.GetAsync<ClientEntity>(id, cancellationToken);
         }
 
-        public async Task<bool> ExistDocumentNumberAsync(DocumentNumber documento, CancellationToken cancellationToken = default)
+        public async Task<bool> ExistDocumentNumberAsync(DocumentNumber document, CancellationToken cancellationToken = default)
         {
-            using var session = _sessionFactory.OpenSession();
-
-            return await session.Query<ClientEntity>()
-                .AnyAsync(c => c.DocumentNumber.Valor == documento.Valor, cancellationToken);
+            return await _session.Query<ClientEntity>()
+                .AnyAsync(c => c.DocumentNumber.Value == document.Value, cancellationToken);
         }
     }
 }

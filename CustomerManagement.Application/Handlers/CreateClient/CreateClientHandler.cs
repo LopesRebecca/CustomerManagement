@@ -22,19 +22,19 @@ namespace CustomerManagement.Application.Handlers.CreateClient
         {
             try
             {
-                var documento = DocumentNumber.Create(command.DocumentNumber);
+                var document = DocumentNumber.Create(command.DocumentNumber);
 
-                if (await _repository.ExistDocumentNumberAsync(documento, cancellationToken))
+                if (await _repository.ExistDocumentNumberAsync(document, cancellationToken))
                     return CreateClientResponse.Failed("Documento já cadastrado.");
 
-                var cliente = new ClientEntity(
+                var client = new ClientEntity(
                     command.Name,
-                    documento
+                    document
                 );
 
-                await _repository.CreateAsync(cliente, cancellationToken);
+                await _repository.CreateAsync(client, cancellationToken);
 
-                return CreateClientResponse.Ok(cliente.Id);
+                return CreateClientResponse.Ok(client.Id);
             }
             catch (DomainException ex)
             {
