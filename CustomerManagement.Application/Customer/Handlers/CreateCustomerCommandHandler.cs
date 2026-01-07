@@ -1,24 +1,24 @@
-﻿using CustomerManagement.Application.Commands.Request;
-using CustomerManagement.Application.Commands.Response;
-using CustomerManagement.Application.Handlers.CreateCustomer;
+﻿using CustomerManagement.Application.Customer.Commands;
+using CustomerManagement.Application.Customer.DTO;
+using CustomerManagement.Application.Mediator;
 using CustomerManagement.Domain.Entities;
 using CustomerManagement.Domain.Exceptions;
 using CustomerManagement.Domain.Interface.Repositories;
 using CustomerManagement.Domain.ValueObjects;
 
-namespace CustomerManagement.Application.Handlers.Customer
+namespace CustomerManagement.Application.Customer.Handlers
 {
-    public class CreateCustomerHandler : ICreateCustomerHandler
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CreateCustomerResultDTO>
     {
         private readonly ICustomerRepository _repository;
 
-        public CreateCustomerHandler(ICustomerRepository repository)
+        public CreateCustomerCommandHandler(ICustomerRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<CreateCustomerResponse> HandleAsync(
-            CreateCustomerRequestCommand command,
+        public async Task<CreateCustomerResultDTO> Handle(
+            CreateCustomerCommand command, 
             CancellationToken cancellationToken = default)
         {
             try
@@ -26,7 +26,7 @@ namespace CustomerManagement.Application.Handlers.Customer
                 var document = DocumentNumber.Create(command.DocumentNumber);
 
                 if (await _repository.ExistDocumentNumberAsync(document, cancellationToken))
-                    return CreateCustomerResponse.Failed("Documento já cadastrado.");
+                    return CreateCustomerResultDTO.Failed("Documento já cadastrado.");
 
                 var client = new CustomerEntity(
                     command.Name,
@@ -35,11 +35,11 @@ namespace CustomerManagement.Application.Handlers.Customer
 
                 await _repository.CreateAsync(client, cancellationToken);
 
-                return CreateCustomerResponse.Ok(client.Id);
+                return CreateCustomerResultDTO.Ok(client.Id);
             }
             catch (DomainException ex)
             {
-                return CreateCustomerResponse.Failed(ex.Message);
+                return CreateCustomerResultDTO.Failed(ex.Message);
             }
         }
     }
