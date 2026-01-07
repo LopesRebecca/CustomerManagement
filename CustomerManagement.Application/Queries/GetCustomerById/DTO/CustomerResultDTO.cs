@@ -1,6 +1,6 @@
 ﻿namespace CustomerManagement.Application.Queries.GetClientById.DTO
 {
-    public class ClientResultDTO
+    public class CustomerResultDTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

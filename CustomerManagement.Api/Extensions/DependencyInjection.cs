@@ -1,6 +1,4 @@
-﻿using CustomerManagement.Application.Handlers.CreateClient;
-
-namespace CustomerManagement.Api.Extensions
+﻿namespace CustomerManagement.Api.Extensions
 {
     public static class DependencyInjection
     {

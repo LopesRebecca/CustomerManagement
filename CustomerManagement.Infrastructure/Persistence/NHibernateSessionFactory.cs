@@ -18,7 +18,7 @@ namespace CustomerManagement.Infrastructure.Persistence
 #endif
                 )
                 .Mappings(m =>
-                    m.FluentMappings.AddFromAssemblyOf<ClientMap>()
+                    m.FluentMappings.AddFromAssemblyOf<CustomerMap>()
                 )
                 .BuildSessionFactory();
         }

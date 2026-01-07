@@ -3,11 +3,11 @@ using FluentNHibernate.Mapping;
 
 namespace CustomerManagement.Infrastructure.Persistence.Maps
 {
-    public class ClientMap : ClassMap<ClientEntity>
+    public class CustomerMap : ClassMap<CustomerEntity>
     {
-        public ClientMap()
+        public CustomerMap()
         {
-            Table("clientes");
+            Table("Customer");
 
             Id(x => x.Id)
                 .Column("id")

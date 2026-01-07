@@ -1,23 +1,24 @@
 ﻿using CustomerManagement.Application.Commands.Request;
 using CustomerManagement.Application.Commands.Response;
+using CustomerManagement.Application.Handlers.CreateCustomer;
 using CustomerManagement.Domain.Entities;
 using CustomerManagement.Domain.Exceptions;
 using CustomerManagement.Domain.Interface.Repositories;
 using CustomerManagement.Domain.ValueObjects;
 
-namespace CustomerManagement.Application.Handlers.CreateClient
+namespace CustomerManagement.Application.Handlers.Customer
 {
-    public class CreateClientHandler : ICreateClientHandler
+    public class CreateCustomerHandler : ICreateCustomerHandler
     {
-        private readonly IClientRepository _repository;
+        private readonly ICustomerRepository _repository;
 
-        public CreateClientHandler(IClientRepository repository)
+        public CreateCustomerHandler(ICustomerRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<CreateClientResponse> HandleAsync(
-            CreateClientRequestCommand command,
+        public async Task<CreateCustomerResponse> HandleAsync(
+            CreateCustomerRequestCommand command,
             CancellationToken cancellationToken = default)
         {
             try
@@ -25,20 +26,20 @@ namespace CustomerManagement.Application.Handlers.CreateClient
                 var document = DocumentNumber.Create(command.DocumentNumber);
 
                 if (await _repository.ExistDocumentNumberAsync(document, cancellationToken))
-                    return CreateClientResponse.Failed("Documento já cadastrado.");
+                    return CreateCustomerResponse.Failed("Documento já cadastrado.");
 
-                var client = new ClientEntity(
+                var client = new CustomerEntity(
                     command.Name,
                     document
                 );
 
                 await _repository.CreateAsync(client, cancellationToken);
 
-                return CreateClientResponse.Ok(client.Id);
+                return CreateCustomerResponse.Ok(client.Id);
             }
             catch (DomainException ex)
             {
-                return CreateClientResponse.Failed(ex.Message);
+                return CreateCustomerResponse.Failed(ex.Message);
             }
         }
     }

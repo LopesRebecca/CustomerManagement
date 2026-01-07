@@ -3,10 +3,10 @@ using CustomerManagement.Domain.ValueObjects;
 
 namespace CustomerManagement.Domain.Interface.Repositories
 {
-    public interface IClientRepository
+    public interface ICustomerRepository
     {
-        Task CreateAsync(ClientEntity client, CancellationToken cancellationToken = default);
-        Task<ClientEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task CreateAsync(CustomerEntity client, CancellationToken cancellationToken = default);
+        Task<CustomerEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
         Task<bool> ExistDocumentNumberAsync(DocumentNumber document, CancellationToken cancellationToken = default);
     }
 }
