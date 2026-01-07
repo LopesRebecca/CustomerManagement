@@ -5,8 +5,8 @@ namespace CustomerManagement.Domain.Interface.Repositories
 {
     public interface IClientRepository
     {
-        Task CreateAsync(ClientEntity cliente);
-        Task<ClientEntity?> GetByIdAsync(int id);
-        Task<bool> ExistDocumentNumberAsync(DocumentNumber documento);
+        Task CreateAsync(ClientEntity cliente, CancellationToken cancellationToken = default);
+        Task<ClientEntity?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<bool> ExistDocumentNumberAsync(DocumentNumber documento, CancellationToken cancellationToken = default);
     }
 }

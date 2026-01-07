@@ -5,39 +5,52 @@ namespace CustomerManagement.Domain.Entities
 {
     public class ClientEntity
     {
-        public int Id { get; private set; }
-        public string Name { get; private set; }
-        public DocumentNumber DocumentNumber { get; private set; }
-        public bool Active { get; private set; }
+        public virtual int Id { get; protected set; }
+        public virtual string Name { get; protected set; } = default!;
+        public virtual DocumentNumber DocumentNumber { get; protected set; } = default!;
+        public virtual bool Active { get; protected set; }
 
         protected ClientEntity() { }
 
-        public ClientEntity(string fantasyName, DocumentNumber documentNumber)
+        public ClientEntity(string name, DocumentNumber documentNumber)
         {
-            Name = fantasyName;
-            DocumentNumber = documentNumber;
+            ValidateName(name);
+            
+            Name = name;
+            DocumentNumber = documentNumber ?? throw new DomainException("Documento é obrigatório.");
             Active = true;
         }
-        public void Deactivate()
+
+        public virtual void Deactivate()
         {
             if (!Active)
                 throw new DomainException("Cliente já está inativo.");
             Active = false;
         }
 
-        public void Activate()
+        public virtual void Activate()
         {
             if (Active)
                 throw new DomainException("Cliente já está ativo.");
             Active = true;
         }
 
-        public void Validate(string fantasyName, string documentNumber)
+        public virtual void UpdateName(string name)
         {
-            if (string.IsNullOrWhiteSpace(fantasyName))
-                throw new DomainException("Nome fantasia não pode ser vazio.");
-            if (string.IsNullOrWhiteSpace(documentNumber))
-                throw new DomainException("Número do documento não pode ser vazio.");
+            ValidateName(name);
+            Name = name;
+        }
+
+        private static void ValidateName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new DomainException("Nome não pode ser vazio.");
+
+            if (name.Length < 2)
+                throw new DomainException("Nome deve ter pelo menos 2 caracteres.");
+
+            if (name.Length > 200)
+                throw new DomainException("Nome deve ter no máximo 200 caracteres.");
         }
     }
 }
