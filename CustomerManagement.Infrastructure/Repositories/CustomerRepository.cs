@@ -33,7 +33,7 @@ namespace CustomerManagement.Infrastructure.Repositories
         public async Task<bool> ExistDocumentNumberAsync(DocumentNumber document, CancellationToken cancellationToken = default)
         {
             return await _session.Query<CustomerEntity>()
-                .AnyAsync(c => c.DocumentNumber.Value == document.Value, cancellationToken);
+                .AnyAsync(c => c.DocumentNumber.Value == document.Value && c.DocumentNumber.Type == document.Type, cancellationToken);
         }
     }
 }

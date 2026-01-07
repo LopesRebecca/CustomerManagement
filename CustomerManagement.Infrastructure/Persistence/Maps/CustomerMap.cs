@@ -1,4 +1,5 @@
 ﻿using CustomerManagement.Domain.Entities;
+using CustomerManagement.Domain.Enums;
 using FluentNHibernate.Mapping;
 
 namespace CustomerManagement.Infrastructure.Persistence.Maps
@@ -27,6 +28,7 @@ namespace CustomerManagement.Infrastructure.Persistence.Maps
 
                 m.Map(d => d.Type)
                     .Column("document_type")
+                    .CustomType<DocumentType>()
                     .Not.Nullable();
             });
 

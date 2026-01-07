@@ -1,6 +1,4 @@
-using CustomerManagement.Application.Handlers.CreateCustomer;
-using CustomerManagement.Application.Handlers.Customer;
-using CustomerManagement.Application.Handlers.GetCustomerById;
+using CustomerManagement.Api.Extensions;
 using CustomerManagement.Domain.Interface.Repositories;
 using CustomerManagement.Infrastructure.Persistence;
 using CustomerManagement.Infrastructure.Repositories;
@@ -35,9 +33,9 @@ builder.Services.AddSingleton(factory =>
 // Repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-// Application Handlers
-builder.Services.AddScoped<ICreateCustomerHandler, CreateCustomerHandler>();
-builder.Services.AddScoped<IGetCustomerByIdHandler, GetCustomerByIdHandler>();
+// Application - Mediator e Handlers
+builder.Services.AddApplication();
+
 
 var app = builder.Build();
 

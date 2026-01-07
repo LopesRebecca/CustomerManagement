@@ -7,11 +7,11 @@ namespace CustomerManagement.Infrastructure.Persistence
 {
     public class NHibernateSessionFactory
     {
-        public static ISessionFactory CreateSessionFactory      (string connectionString)
+        public static ISessionFactory CreateSessionFactory(string connectionString)
         {
             return Fluently.Configure()
                 .Database(
-                    PostgreSQLConfiguration.Standard
+                    PostgreSQLConfiguration.PostgreSQL82
                         .ConnectionString(connectionString)
 #if DEBUG
                         .ShowSql()
@@ -23,4 +23,5 @@ namespace CustomerManagement.Infrastructure.Persistence
                 .BuildSessionFactory();
         }
     }
+
 }
