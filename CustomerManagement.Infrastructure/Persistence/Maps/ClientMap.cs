@@ -7,7 +7,7 @@ namespace CustomerManagement.Infrastructure.Persistence.Maps
     {
         public ClientMap()
         {
-            Table("client");
+            Table("clientes");
 
             Id(x => x.Id)
                 .Column("id")

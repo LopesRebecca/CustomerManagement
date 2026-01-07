@@ -1,4 +1,5 @@
 using CustomerManagement.Application.Handlers.CreateClient;
+using CustomerManagement.Application.Handlers.GetClientById;
 using CustomerManagement.Domain.Interface.Repositories;
 using CustomerManagement.Infrastructure.Persistence;
 using CustomerManagement.Infrastructure.Repositories;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 
 // Application Handlers
 builder.Services.AddScoped<ICreateClientHandler, CreateClientHandler>();
+builder.Services.AddScoped<IGetClientByIdHandler, GetClientByIdHadler>();
 
 var app = builder.Build();
 
