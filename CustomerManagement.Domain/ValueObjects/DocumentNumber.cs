@@ -3,10 +3,13 @@ using CustomerManagement.Domain.Exceptions;
 
 namespace CustomerManagement.Domain.ValueObjects
 {
-    public sealed class DocumentNumber
+    public sealed class DocumentNumber : IEquatable<DocumentNumber>
     {
         public string Value { get; }
         public DocumentType Type { get; }
+
+        // Construtor para NHibernate
+        private DocumentNumber() { }
 
         private DocumentNumber(string valor, DocumentType tipo)
         {
@@ -45,8 +48,14 @@ namespace CustomerManagement.Domain.ValueObjects
             return new DocumentNumber(digit, type);
         }
 
+        public override string ToString() => Tipo == DocumentType.Cpf
+            ? FormatarCpf(Valor)
+            : FormatarCnpj(Valor);
 
         public override string ToString() => Value;
+
+        private static string FormatarCnpj(string cnpj)
+            => $"{cnpj[..2]}.{cnpj[2..5]}.{cnpj[5..8]}/{cnpj[8..12]}-{cnpj[12..]}";
 
         private static void ValidarCpf(string cpf)
         {
@@ -115,5 +124,14 @@ namespace CustomerManagement.Domain.ValueObjects
                 throw new DomainException("CNPJ inválido.");
         }
 
+        public override bool Equals(object? obj) => Equals(obj as DocumentNumber);
+
+        public override int GetHashCode() => HashCode.Combine(Valor, Tipo);
+
+        public static bool operator ==(DocumentNumber? left, DocumentNumber? right)
+            => left?.Equals(right) ?? right is null;
+
+        public static bool operator !=(DocumentNumber? left, DocumentNumber? right)
+            => !(left == right);
     }
 }
