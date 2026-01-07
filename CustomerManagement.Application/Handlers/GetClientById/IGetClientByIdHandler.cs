@@ -3,7 +3,7 @@ using CustomerManagement.Application.Queries.GetClientById.DTO;
 
 namespace CustomerManagement.Application.Handlers.GetClientById
 {
-    public interface IGetClientByIdHadler
+    public interface IGetClientByIdHandler
     {
         Task<ClientResultDTO?> HandleAsync(GetClientByIdQuery request);
     }

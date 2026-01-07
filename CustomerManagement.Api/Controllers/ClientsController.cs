@@ -12,14 +12,14 @@ namespace CustomerManagement.Api.Controllers
     public sealed class ClientsController : ControllerBase
     {
         private readonly ICreateClientHandler _createClientHandler;
-        private readonly IGetClientByIdHadler _getClientByIdHadler;
+        private readonly IGetClientByIdHandler _getClientByIdHadler;
 
         public ClientsController(
             ICreateClientHandler createClientHandler,
-            IGetClientByIdHadler getClientByIdHadler)
+            IGetClientByIdHandler getClientByIdHandler)
         {
             _createClientHandler = createClientHandler;
-            _getClientByIdHadler = getClientByIdHadler;
+            _getClientByIdHadler = getClientByIdHandler;
         }
 
         [HttpPost]
@@ -41,8 +41,8 @@ namespace CustomerManagement.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("${id}")]
-        public async Task<IActionResult> Get(int idClient)
+        [HttpGet("{idClient}")]
+        public async Task<IActionResult> Get([FromRoute(Name = "id")]int idClient)
         {
             var query = new GetClientByIdQuery
             {
@@ -50,6 +50,9 @@ namespace CustomerManagement.Api.Controllers
             };
 
             var result = await _getClientByIdHadler.HandleAsync(query);
+
+            if(result is null)
+                return NotFound("Cliente com o Id informado não encontrado");
 
             return Ok(result);
         }

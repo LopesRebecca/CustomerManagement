@@ -36,7 +36,7 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 
 // Application Handlers
 builder.Services.AddScoped<ICreateClientHandler, CreateClientHandler>();
-builder.Services.AddScoped<IGetClientByIdHadler, GetClientByIdHadler>();
+builder.Services.AddScoped<IGetClientByIdHandler, GetClientByIdHadler>();
 
 var app = builder.Build();
 

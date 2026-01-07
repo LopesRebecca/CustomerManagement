@@ -1,15 +1,10 @@
 ﻿using CustomerManagement.Application.Queries.GetClientById;
 using CustomerManagement.Application.Queries.GetClientById.DTO;
 using CustomerManagement.Domain.Interface.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomerManagement.Application.Handlers.GetClientById
 {
-    public class GetClientByIdHadler : IGetClientByIdHadler
+    public class GetClientByIdHadler : IGetClientByIdHandler
     {
         private readonly IClientRepository _repository;
 
