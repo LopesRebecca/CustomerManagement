@@ -1,5 +1,6 @@
 ﻿using CustomerManagement.Application.Customer.Handlers;
 using CustomerManagement.Application.Mediator;
+using ValidationsGeneral.Extensions;
 
 namespace CustomerManagement.Api.Extensions
 {
@@ -7,8 +8,9 @@ namespace CustomerManagement.Api.Extensions
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            // Registra o Mediator e todos os handlers do assembly Application
             services.AddMediator(typeof(CreateCustomerCommandHandler).Assembly);
+            services.AddMediator(typeof(GetCustomerByIdQueryHandler).Assembly);
+            services.AddValidationStrategies();
 
             return services;
         }

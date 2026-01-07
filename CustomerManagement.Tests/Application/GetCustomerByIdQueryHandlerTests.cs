@@ -192,6 +192,7 @@ namespace CustomerManagement.Tests.Application
             // Assert
             Assert.NotNull(result);
             Assert.IsType<GetCustomerByIdResultDTO>(result);
+            Assert.Equal(customer.Id, result.Id);
             Assert.Equal(customer.Name, result.Name);
             Assert.Equal(customer.DocumentNumber.ToString(), result.Document);
             Assert.Equal(customer.Active, result.IsActive);
