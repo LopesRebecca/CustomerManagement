@@ -31,7 +31,7 @@ builder.Services.AddSingleton(factory =>
 );
 
 // Repositories
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 
 // Application - Mediator e Handlers
 builder.Services.AddApplication();

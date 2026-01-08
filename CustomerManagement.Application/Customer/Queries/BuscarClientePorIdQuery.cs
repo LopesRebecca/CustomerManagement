@@ -3,7 +3,7 @@ using CustomerManagement.Application.Mediator;
 
 namespace CustomerManagement.Application.Customer.Queries
 {
-    public class GetCustomerByIdQuery : IRequest<GetCustomerByIdResultDTO?>
+    public class BuscarClientePorIdQuery : IRequest<BuscarClientePorIdResultadoDTO?>
     {
         public required int Id { get; init; }
     }
