@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerManagement.Api.Controllers
 {
     [ApiController]
-    [Route("api/clientes")]
+    [Route("api/customers")]
     public sealed class CustomerController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -18,7 +18,7 @@ namespace CustomerManagement.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Criar(
+        public async Task<IActionResult> Create(
             [FromBody] CreateCustomerRequest request,
             CancellationToken cancellationToken = default)
         {
