@@ -6,11 +6,11 @@
         public string Mensagem { get; set; }
         public int? ClienteId { get; set; }
 
-        public CriarClienteResultadoDTO(bool sucesso, string mensagem, int? clientId)
+        public CriarClienteResultadoDTO(bool sucesso, string mensagem, int? clienteId)
         {
             Sucesso = sucesso;
             Mensagem = mensagem;
-            ClienteId = clientId;
+            ClienteId = clienteId;
         }
         public static CriarClienteResultadoDTO Ok(int id)
             => new(true, "Cadastro realizado com sucesso!", id);

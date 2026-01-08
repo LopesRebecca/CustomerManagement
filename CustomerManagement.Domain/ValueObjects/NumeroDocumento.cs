@@ -54,13 +54,25 @@ namespace CustomerManagement.Domain.ValueObjects
 
         public override string ToString() => Valor;
 
-        public override bool Equals(object? obj) => Equals(obj as NumeroDocumento);
-
-        public override int GetHashCode() => HashCode.Combine(Valor, Tipo);
-
         public bool Equals(NumeroDocumento? other)
         {
-            throw new NotImplementedException();
+            if (other is null)
+                return false;
+
+            if (ReferenceEquals(this, other))
+                return true;
+
+            return Valor == other.Valor && Tipo == other.Tipo;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as NumeroDocumento);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Valor, Tipo);
         }
 
         public static bool operator ==(NumeroDocumento? left, NumeroDocumento? right)
